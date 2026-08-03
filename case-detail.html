@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<!-- ===== GOOGLE TAG MANAGER (same container as index.html — see comment there) ===== -->
+<script>window.dataLayer = window.dataLayer || [];</script>
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-XXXXXXX');</script>
+<!-- ===== MICROSOFT CLARITY (same project as index.html — see comment there) ===== -->
+<script type="text/javascript">
+  (function(c,l,a,r,i,t,y){
+    c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+    t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+    y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+  })(window, document, "clarity", "script", "xs5jvwkfb7");
+</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>Детальний перегляд кейсу — Влад</title>
+<meta name="description" content="Кейс веб-розробника Влада: детальний процес роботи, результат, скріншоти проекту та відгук замовника. Розробка сайтів, лендингів і CRM-систем під ключ.">
+<meta name="robots" content="index, follow">
+<meta name="author" content="Влад">
+<link rel="canonical" href="https://vladwebstudio.github.io/portfolio/case-detail.html">
+<link rel="icon" type="image/svg+xml" href="img/favicon.svg">
+<meta property="og:title" content="Кейс веб-розробника Влада — процес, результат, відгук">
+<meta property="og:description" content="Детальний розбір проекту: технічне завдання, дизайн, розробка, результат і відгук замовника.">
+<meta property="og:image" content="https://vladwebstudio.github.io/portfolio/img/land-1.webp">
+<meta property="og:url" content="https://vladwebstudio.github.io/portfolio/case-detail.html">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="uk_UA">
+<meta property="og:site_name" content="Влад — веб-розробник">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Кейс веб-розробника Влада — процес, результат, відгук">
+<meta name="twitter:image" content="https://vladwebstudio.github.io/portfolio/img/land-1.webp">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Poppins:wght@700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link rel="stylesheet" href="css/case-detail.css">
+<script type="application/ld+json" id="caseSchema">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Влад — веб-розробник", "item": "https://vladwebstudio.github.io/portfolio/" },
+    { "@type": "ListItem", "position": 2, "name": "Кейси", "item": "https://vladwebstudio.github.io/portfolio/#cases" }
+  ]
+}
+</script>
+</head>
+<body>
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-XXXXXXX" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- ===== PARTICLE CANVAS ===== -->
+<canvas id="particleCanvas"></canvas>
+
+<!-- ===== NAV ===== -->
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">vlad.dev</a>
+    <a href="index.html#cases" class="nav-back">
+      <i class="fas fa-arrow-left"></i>
+      <span data-key="back_to_cases">Повернутися до кейсів</span>
+    </a>
+  </div>
+</nav>
+
+<!-- ===== CASE DETAIL ===== -->
+<section class="case-detail">
+  <div class="container">
+    
+    <!-- Header -->
+    <div class="case-header">
+      <!-- Navigation between cases -->
+      <div class="nav-cases">
+        <a href="#" class="nav-case-btn prev" id="prevCase">
+          <i class="fas fa-chevron-left"></i>
+          <span data-key="prev_case">Попередній кейс</span>
+        </a>
+        <a href="#" class="nav-case-btn next" id="nextCase">
+          <span data-key="next_case">Наступний кейс</span>
+          <i class="fas fa-chevron-right"></i>
+        </a>
+      </div>
+      <div class="case-badge" id="caseBadge"><i class="fas fa-clapperboard"></i><span id="caseType">Відеопродакшн-сайт</span></div>
+      <h1 class="case-title" id="caseTitle">Сайт та адмін-панель для Contrabas</h1>
+      <p class="case-desc" id="caseDesc">Повний редизайн сайту креативної відеопродакшн-компанії Contrabas: преміальний темний UI та кастомна адмін-панель.</p>
+    </div>
+
+    <!-- Timeline -->
+    <div class="timeline-section">
+      <div class="timeline-label">
+        <i class="fas fa-route"></i>
+        <span data-key="timeline_title">Процес роботи</span>
+      </div>
+      <div class="timeline" id="timeline">
+        <!-- Timeline items will be inserted by JS -->
+      </div>
+    </div>
+
+    <!-- Result -->
+    <div class="result-section">
+      <div class="result-label">
+        <i class="fas fa-trophy"></i>
+        <span data-key="result_title">Результат</span>
+      </div>
+      <div class="result-grid" id="resultGrid">
+        <!-- Result cards will be inserted by JS -->
+      </div>
+    </div>
+
+    <!-- Gallery -->
+    <div class="gallery-section">
+      <div class="gallery-label">
+        <i class="fas fa-images"></i>
+        <span data-key="gallery_title">Скріншоти проекту</span>
+      </div>
+      <div class="gallery-slider-wrapper" id="gallerySliderWrapper">
+        <!-- Slider will be inserted by JS -->
+      </div>
+      <div class="gal-info" id="galleryInfo">
+        <div class="gal-info-title"></div>
+        <div class="gal-info-desc"></div>
+        <div class="gal-info-features"></div>
+      </div>
+    </div>
+
+    <!-- Testimonial -->
+    <div class="testimonial-section">
+      <div class="testimonial-label">
+        <i class="fas fa-quote-left"></i>
+        <span data-key="testimonial_title">Відгук замовника</span>
+      </div>
+      <div class="testimonial-card" id="testimonialCard">
+        <!-- Testimonial will be inserted by JS -->
+      </div>
+    </div>
+
+    <!-- CTA -->
+    <div class="cta-section">
+      <div class="cta-box">
+        <h3 data-key="cta_title">Потрібен схожий проект?</h3>
+        <p data-key="cta_desc">Обговоримо ваше завдання, терміни та вартість. Напишіть у Telegram.</p>
+        <div class="cta-btns">
+          <a href="https://t.me/vladoss_011" target="_blank" class="cta-btn primary">
+            <i class="fab fa-telegram"></i>
+            <span data-key="cta_tg">Написати в Telegram</span>
+          </a>
+          <a href="#" id="projectLinkBtn" class="cta-btn secondary" target="_blank">
+            <i class="fas fa-external-link-alt"></i>
+            <span data-key="project_link_btn">Відкрити проект (гість)</span>
+          </a>
+          <a href="index.html#calculator" class="cta-btn secondary">
+            <i class="fas fa-tag"></i>
+            <span data-key="cta_price">Переглянути ціни</span>
+          </a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ===== LIGHTBOX ===== -->
+<div class="lightbox" id="lightbox">
+  <div class="lb-content">
+    <div class="lb-close"><i class="fas fa-times"></i></div>
+    <img src="" alt="" id="lightboxImg">
+    <div class="lb-nav">
+      <div class="lb-arr lb-prev"><i class="fas fa-chevron-left"></i></div>
+      <div class="lb-arr lb-next"><i class="fas fa-chevron-right"></i></div>
+    </div>
+    <div class="lb-counter"></div>
+    <div class="lb-zoom">
+      <div class="lb-zoom-btn lb-zoom-in" id="zoomIn"><i class="fas fa-plus"></i></div>
+      <div class="lb-zoom-btn lb-zoom-reset" id="zoomReset"><i class="fas fa-undo"></i></div>
+      <div class="lb-zoom-btn lb-zoom-out" id="zoomOut"><i class="fas fa-minus"></i></div>
+      <div class="lb-zoom-hint" id="zoomHint">Ctrl + колёсико</div>
+    </div>
+    <div class="lb-info">
+      <div class="lb-info-header">
+        <div class="lb-info-title"></div>
+        <div class="lb-info-toggle" id="lbInfoToggle"><i class="fas fa-minus"></i></div>
+      </div>
+      <div class="lb-info-desc"></div>
+      <div class="lb-info-features"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== SCROLL TO TOP ===== -->
+
+<button class="scroll-top" id="scrollTopBtn" onclick="scrollToTop()">
+
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+
+    <line class="arrow-base" x1="12" y1="19" x2="12" y2="5"></line>
+
+    <polyline class="arrow-left" points="5 12 12 5 19 12"></polyline>
+
+  </svg>
+
+</button>
+
+<script src="js/case-detail.js" defer></script>
+</body>
+</html>
