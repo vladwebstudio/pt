@@ -37,7 +37,7 @@ function updateSeoTags(caseData, id) {
   // Canonical/OG URL points at the static per-case page (case-1.html etc.), not the
   // query-string route — that's the URL search engines and shared links should treat
   // as the "real" address for this case (see build-case-pages.js).
-  const pageUrl = `https://vladwebstudio.github.io/portfolio/case-${id}.html`;
+  const pageUrl = `https://vladwebstudio.github.io/pt/case-${id}.html`;
   const fullTitle = `${caseTitle} — кейс | ${t.page_title.split('—')[1] ? t.page_title.split('—')[1].trim() : 'Влад'}`;
   document.title = fullTitle;
   const setMeta = (selector, attr, value) => {
@@ -59,12 +59,12 @@ function updateSeoTags(caseData, id) {
         "@type": "ListItem",
         "position": 1,
         "name": "Влад — веб-розробник",
-        "item": "https://vladwebstudio.github.io/portfolio/"
+        "item": "https://vladwebstudio.github.io/pt/"
       }, {
         "@type": "ListItem",
         "position": 2,
         "name": "Кейси",
-        "item": "https://vladwebstudio.github.io/portfolio/#cases"
+        "item": "https://vladwebstudio.github.io/pt/#cases"
       }, {
         "@type": "ListItem",
         "position": 3,
