@@ -673,6 +673,21 @@ class Component extends DCLogic {
     window.dataLayer.push(Object.assign({ event: eventName, event_id }, params || {}));
   };
 
+  // Fire-and-forget log of real visitor questions to a Google Sheet (via an Apps Script
+  // Web App), so real questions can be reviewed later and missing canned answers added.
+  // mode: 'no-cors' means we can never read the response — that's fine, this must never
+  // block the chat UI or throw if the request fails (offline, ad-blocker, etc).
+  logChatQuestion = (question, lang) => {
+    try {
+      fetch('https://script.google.com/macros/s/AKfycbzHxLxYNWHHMF0t36YaAdmz07b1M5aYaRUw1IqtZgap3yO1kT0fAtpIOh67Sqve4Hr05g/exec', {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+        body: JSON.stringify({ question, page: 'index', lang: lang || '' })
+      }).catch(() => {});
+    } catch (e) { /* never let logging break the chat */ }
+  };
+
   ctaLocation = (el) => {
     const section = el.closest && el.closest('section[id]');
     return (section && section.id) || (el.closest('nav') ? 'nav' : el.closest('footer') ? 'footer' : 'other');
@@ -1178,6 +1193,7 @@ class Component extends DCLogic {
     // (could contain personal info the visitor types by mistake).
     const hasPriceIntent = /скільки коштує|скільки вартіст|яка ціна|яка вартіст|ціна|вартіст|кошт|бюджет|почому|price|cost|how much/i.test(lower);
     this.trackEvent('chat_query', { has_price_intent: hasPriceIntent, query_length: raw.length });
+    this.logChatQuestion(raw, this.detectLang(lower));
 
     this.setState({ answering: true, termInput: '' });
     clearTimeout(this.answerTimer);
