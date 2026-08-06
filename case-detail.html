@@ -10,9 +10,6 @@
 
   gtag('config', 'AW-18368345385');
 </script>
-<!-- ===== GOOGLE TAG MANAGER (same container as index.html — see comment there) ===== -->
-<script>window.dataLayer = window.dataLayer || [];</script>
-<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-XXXXXXX');</script>
 <!-- ===== MICROSOFT CLARITY (same project as index.html — see comment there) ===== -->
 <script type="text/javascript">
   (function(c,l,a,r,i,t,y){
@@ -23,6 +20,14 @@
 </script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+
+<!-- ===== RESOURCE HINTS (speed up the render-blocking font/icon requests below) ===== -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+<link rel="dns-prefetch" href="https://www.googletagmanager.com">
+<link rel="dns-prefetch" href="https://www.clarity.ms">
+
 <title>Детальний перегляд кейсу — Влад</title>
 <meta name="description" content="Кейс веб-розробника Влада: детальний процес роботи, результат, скріншоти проекту та відгук замовника. Розробка сайтів, лендингів і CRM-систем під ключ.">
 <meta name="robots" content="index, follow">
@@ -54,7 +59,6 @@
 </script>
 </head>
 <body>
-<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-XXXXXXX" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- ===== PARTICLE CANVAS ===== -->
 <canvas id="particleCanvas"></canvas>
 
@@ -89,6 +93,10 @@
       <div class="case-badge" id="caseBadge"><i class="fas fa-clapperboard"></i><span id="caseType">Відеопродакшн-сайт</span></div>
       <h1 class="case-title" id="caseTitle">Сайт та адмін-панель для Contrabas</h1>
       <p class="case-desc" id="caseDesc">Повний редизайн сайту креативної відеопродакшн-компанії Contrabas: преміальний темний UI та кастомна адмін-панель.</p>
+      <a href="#" id="projectLinkBtnTop" class="cta-btn secondary case-header-cta" target="_blank">
+        <i class="fas fa-external-link-alt"></i>
+        <span data-key="project_link_btn">Відкрити проект (гість)</span>
+      </a>
     </div>
 
     <!-- Timeline -->

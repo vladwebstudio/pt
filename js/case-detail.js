@@ -612,6 +612,15 @@ function loadCase(id) {
     projectLinkBtn.style.display = caseData.projectLink ? '' : 'none';
   }
 
+  // Duplicate CTA right under the header — people land here expecting the
+  // title/description area to be interactive (Clarity showed repeated dead
+  // clicks right there), so give them a real link in that spot too.
+  const projectLinkBtnTop = document.getElementById('projectLinkBtnTop');
+  if (projectLinkBtnTop) {
+    projectLinkBtnTop.href = caseData.projectLink || '#';
+    projectLinkBtnTop.style.display = caseData.projectLink ? '' : 'none';
+  }
+
   // Update testimonial
   const testimonialEl = document.getElementById('testimonialCard');
   if (caseData.testimonial) {
@@ -1059,8 +1068,9 @@ function scrollToTop() {
 }
 
 // ===== TRACKING (same dataLayer/event scheme as index.html) =====
-// Pushes to window.dataLayer only — nothing is sent anywhere until a real GTM container ID
-// is filled in (see the GTM placeholder in <head>). Safe to leave running.
+// Pushes to window.dataLayer for Clarity/GA-style analytics. Real "lead_generated"
+// events (Telegram CTA click on case pages) also fire the actual Google Ads
+// conversion tag, so the ad account sees real conversions from case pages too.
 window.dataLayer = window.dataLayer || [];
 function trackEvent(eventName, params) {
   const event_id = eventName + '_' + Date.now() + '_' + Math.random().toString(36).slice(2, 8);
@@ -1068,6 +1078,10 @@ function trackEvent(eventName, params) {
     event: eventName,
     event_id
   }, params || {}));
+
+  if (eventName === 'lead_generated' && typeof gtag === 'function') {
+    gtag('event', 'conversion', { 'send_to': 'AW-18368345385/bbvYCO-Ipd0cEKnq2rZE' });
+  }
 }
 trackEvent('case_view', {
   case_id: caseId,
@@ -1100,6 +1114,15 @@ if (projectLinkBtnTracked) {
   projectLinkBtnTracked.addEventListener('click', () => {
     trackEvent('cta_click', { cta_type: 'live_project_open', case_id: caseId });
     trackEvent('outbound_click', { url: projectLinkBtnTracked.href, case_id: caseId });
+  });
+}
+
+// Same CTA, duplicated under the header (see projectLinkBtnTop above).
+const projectLinkBtnTopTracked = document.getElementById('projectLinkBtnTop');
+if (projectLinkBtnTopTracked) {
+  projectLinkBtnTopTracked.addEventListener('click', () => {
+    trackEvent('cta_click', { cta_type: 'live_project_open_header', case_id: caseId });
+    trackEvent('outbound_click', { url: projectLinkBtnTopTracked.href, case_id: caseId });
   });
 }
 

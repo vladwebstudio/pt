@@ -42,6 +42,7 @@ body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var
 .case-badge.video{background:rgba(255,107,107,0.15);color:#ff8787;}
 .case-title{font-size:clamp(32px,5vw,48px);font-weight:800;line-height:1.1;margin-bottom:16px;letter-spacing:-1px;}
 .case-desc{font-size:17px;color:var(--t2);line-height:1.8;max-width:700px;}
+.case-header-cta{display:inline-flex;margin-top:20px;width:fit-content;}
 
 /* ===== TIMELINE ===== */
 .timeline-section{margin-bottom:64px;}

@@ -13,10 +13,13 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<!-- ===== GOOGLE TAG MANAGER (placeholder — same container as case-detail.html) =====
-     TODO: replace GTM-XXXXXXX with your real GTM container ID once created in Google Tag Manager. -->
-<script>window.dataLayer = window.dataLayer || [];</script>
-<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-XXXXXXX');</script>
+<!-- ===== RESOURCE HINTS (speed up the render-blocking font/icon requests below) ===== -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+<link rel="dns-prefetch" href="https://www.googletagmanager.com">
+<link rel="dns-prefetch" href="https://www.clarity.ms">
+
 <!-- ===== MICROSOFT CLARITY (same project as case-detail.html) ===== -->
 <script type="text/javascript">
   (function(c,l,a,r,i,t,y){
@@ -94,7 +97,6 @@
 <script src="./support.js"></script>
 </head>
 <body>
-<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-XXXXXXX" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <x-dc>
 <helmet>
   <link rel="icon" type="image/svg+xml" href="img/favicon.svg">
@@ -665,12 +667,17 @@ class Component extends DCLogic {
   }
 
   // ===== TRACKING (same dataLayer/event scheme as js/case-detail.js) =====
-  // Pushes to window.dataLayer only — nothing is sent anywhere until a real GTM container
-  // ID is filled in (see the GTM placeholder in <head>). Safe to leave running.
+  // Pushes to window.dataLayer for Clarity/GA-style analytics. Additionally, real
+  // "lead_generated" events (Telegram CTA click, email/phone copy) also fire the
+  // actual Google Ads conversion tag below, so the ad account sees real conversions.
   trackEvent = (eventName, params) => {
     window.dataLayer = window.dataLayer || [];
     const event_id = eventName + '_' + Date.now() + '_' + Math.random().toString(36).slice(2, 8);
     window.dataLayer.push(Object.assign({ event: eventName, event_id }, params || {}));
+
+    if (eventName === 'lead_generated' && typeof gtag === 'function') {
+      gtag('event', 'conversion', { 'send_to': 'AW-18368345385/bbvYCO-Ipd0cEKnq2rZE' });
+    }
   };
 
   // Fire-and-forget log of real visitor questions to a Google Sheet (via an Apps Script
