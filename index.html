@@ -1007,6 +1007,10 @@ class Component extends DCLogic {
       defineLanding: 'Лендинг — це односторінковий сайт під одну мету: продати товар/послугу або зібрати заявки. Один екран, чіткий заклик до дії, без зайвих розділів — тому й швидший у розробці. Ціна від $100, готовий за 2-3 дні. За потреби можна додати пару сторінок (+$35), і це все ще лендинг.',
       defineMultipage: 'Багатосторінковий сайт — це сайт з кількома розділами (каталог, про нас, послуги, контакти тощо), кожен на своїй сторінці зі своєю структурою — наприклад, магазин з каталогом і кошиком. Підходить, коли треба показати більше, ніж один продукт чи одну послугу. Ціна від $180, готовий за 5-10 днів.',
       defineCrm: 'CRM/адмін-панель — це не публічний сайт, а внутрішня система для бізнесу: облік клієнтів, заявок, оплат, статистика для менеджерів, ролі доступу. Ціна від $250, термін індивідуальний — залежить від складності.',
+      courseAnswer: 'Сайт для курсу — це, по суті, продаючий лендинг: один екран з програмою, тарифами, відгуками й чітким закликом до дії. Ціна від $100, готово за 2-3 дні. Робив схожий проєкт — сторінка онлайн-курсу з блоками програми, тарифів і відгуків (дивіться кейс "Онлайн-курс з товарного бізнесу" нижче). Якщо ще потрібен особистий кабінет учня з доступом до уроків — це вже CRM-частина, і рахується окремо.',
+      whyBother: 'Норм питання :) Це міні-асистент, щоб зекономити ваш час — миттєво порахувати орієнтовну ціну, підказати терміни чи показати кейси, не чекаючи відповіді в месенджері. Якщо простіше — пишіть одразу в Telegram (@vladoss_011), відповім особисто.',
+      nonsense: 'Це не схоже на питання :) Я не ШІ, а простий скрипт — розумію лише конкретні запити про ціну, терміни, процес роботи чи кейси. Спробуйте, наприклад: «скільки коштує лендинг?»',
+      shortClarify: 'Не зовсім зрозумів — уточните, будь ласка: цікавить ціна, терміни, процес роботи чи щось інше?',
       fallback: (r) => `не впевнений щодо "${r}" — спробуйте запитати про ціну, терміни, процес роботи або кейси`,
     },
     en: {
@@ -1032,6 +1036,10 @@ class Component extends DCLogic {
       defineLanding: "A landing page is a single page built around one goal: sell a product/service or collect leads. One screen, a clear call to action, no extra sections — which is also why it's faster to build. Price from $100, ready in 2-3 days. A couple of extra pages can be added for +$35 and it's still a landing.",
       defineMultipage: 'A multi-page site has several sections (catalog, about, services, contact, etc.), each on its own page with its own structure — for example a shop with a catalog and cart. Makes sense when you need to show more than one product or service. Price from $180, ready in 5-10 days.',
       defineCrm: "A CRM/admin panel isn't a public-facing site — it's an internal system for the business: client records, requests, payments, manager stats, access roles. Price from $250, timeline is individual depending on complexity.",
+      courseAnswer: "A course website is essentially a sales landing page: one screen with the program, pricing tiers, testimonials and a clear call to action. Price from $100, ready in 2-3 days. I've built one like this before — an online-course landing with program, pricing and testimonial blocks (see the \"Онлайн-курс з товарного бізнесу\" case below). If you also need a student dashboard with lesson access, that's a CRM part and gets priced separately.",
+      whyBother: "Fair question :) This mini-assistant just saves you time — instant ballpark price, timelines, or cases, without waiting for a reply in a messenger. If it's simpler, just message Telegram (@vladoss_011) directly and I'll reply personally.",
+      nonsense: "That doesn't look like a question :) I'm not AI, just a script — I only understand concrete requests about price, timeline, the process, or cases. Try, for example: \"how much does a landing page cost?\"",
+      shortClarify: 'Not quite sure what you mean — could you clarify: price, timeline, the process, or something else?',
       fallback: (r) => `not sure about "${r}" — try asking about price, timeline, the process, or cases`,
     },
   };
@@ -1111,6 +1119,15 @@ class Component extends DCLogic {
     this._lastPriceHit = false;
 
     if (/дякую|дяк(?=\s|$)|спасибо|спасибі|thx|thanks|thank you/i.test(lower)) return t.thanks;
+    // Skeptical / dismissive "why do I even need this" — including rude phrasings — gets a
+    // calm, friendly answer explaining the point, not the generic "didn't understand" fallback.
+    if (/а\s*нахуя|нахрена|на\s*фіга|на\s*фига|на\s*хрена|який\s*сенс|какой\s*смысл|смысл\s+(в\s+это|цьому)|толку\s+(с|з)\s*(этого|цього)|навіщо\s+це|нафіга|зачем\s+(это|мені|мне)|why\s+(bother|even|would\s+i)|what.?s\s+the\s+point/i.test(lower)) return t.whyBother;
+    // Nonsense / bot-testing input ("біп буп", random test strings) — acknowledge it's not a
+    // real question instead of guessing at an answer for it.
+    if (/біп\s*буп|бип\s*боп|beep\s*boop|^тест(ую)?\b|^test(ing)?\b|асдф|asdf{2,}|qwert|^12345|^\.{3,}$|^[?!.]{2,}$/i.test(lower)) return t.nonsense;
+    // "сайт/лендинг для курсу" — a genuinely common request that used to fall through to the
+    // generic "clarify project type" prompt instead of a real, informed answer.
+    if (/курс/i.test(lower) && /сайт|лендинг|сторінк|страниц|landing|коштує|стоит|ціна|цена/i.test(lower)) return t.courseAnswer;
     if (/ти тут|ты тут|хто тут|кто тут|є хтось|есть кто.?нибудь|^алло\b|^ало\b|are you (there|here)|anybody (there|here)|anyone (there|here)/i.test(lower)) return t.imHere;
     if (/^(привіт|хай|здоров|вітаю|ку|йо|hello|hi|hey|привет|здравствуй|здрасте)(?=\s|$)|как дела|як справи|що нового|что нового|what.?s up|how are you/i.test(lower)) return t.greeting;
     if (/дай(те)? контакт|контакти|контакты|телеграм|telegram|пошта\b|почта\b|contact info|how (do|can) i (contact|reach)|зв.?язатися|зв.?язатись|связаться/i.test(lower)) return t.contactInfo;
@@ -1180,6 +1197,14 @@ class Component extends DCLogic {
       else if (baseKey === 'landing') timeAnswer = t.timeLanding;
       else timeAnswer = t.timeGeneral;
       resp += (resp ? ' ' : '') + timeAnswer;
+    }
+    if (!resp) {
+      // Bare one-word ambiguous input ("Що", "тут?") — a light, inviting clarify prompt reads
+      // better than the generic "not sure what you mean by <raw text>" fallback used for
+      // longer garbled input.
+      const wordCount = lower.split(' ').filter(Boolean).length;
+      const cleanedLen = lower.replace(/[^a-zа-яіїєё]/gi, '').length;
+      if (wordCount <= 1 && cleanedLen > 0 && cleanedLen <= 5) return t.shortClarify;
     }
     return resp || null;
   }
