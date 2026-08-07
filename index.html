@@ -379,7 +379,7 @@
                 <img src="{{ c.img }}" alt="{{ c.alt }}" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;display:block;object-fit:cover;object-position:top;">
                 <div style="position:absolute;inset:-50%;width:200%;height:200%;background:linear-gradient(105deg,transparent 42%,rgba(255,255,255,.16) 50%,transparent 58%);pointer-events:none;animation:glassGlare 11s ease-in-out infinite alternate;animation-delay:{{ c.glareDelay }};"></div>
                 <div data-lens="true" style="position:absolute;width:170px;height:170px;border-radius:22px;overflow:hidden;opacity:0;transition:opacity .2s ease;pointer-events:none;border:1px solid rgba(255,255,255,.3);box-shadow:0 14px 36px rgba(0,0,0,.6);background:var(--bg2);">
-                  <img src="{{ c.img }}" alt="" data-lens-img="true" style="position:absolute;object-fit:cover;object-position:top;">
+                  <img src="{{ c.img }}" alt="" data-lens-img="true" loading="lazy" style="position:absolute;object-fit:cover;object-position:top;">
                 </div>
               </div>
             </div>
