@@ -31,10 +31,20 @@
 <link rel="preload" as="font" href="fonts/space-grotesk/files/space-grotesk-latin-700-normal.woff2" type="font/woff2" crossorigin>
 <link rel="preload" as="script" href="vendor/react/react.production.min.js">
 <link rel="preload" as="script" href="vendor/react/react-dom.production.min.js">
-<link rel="stylesheet" href="fonts/inter/inter.css">
-<link rel="stylesheet" href="fonts/space-grotesk/space-grotesk.css">
-<link rel="stylesheet" href="fonts/jetbrains-mono/jetbrains-mono.css">
-<link rel="stylesheet" href="vendor/fontawesome/css/all.min.css">
+<!-- SPEED FIX (7.08.2026): these 4 stylesheets were blocking first paint for ~2.4s on
+     throttled mobile (PageSpeed: "Запити, що блокують рендеринг"). They're now loaded
+     non-blocking via the standard media=print/onload swap trick, with a <noscript>
+     fallback for crawlers/no-JS. -->
+<link rel="stylesheet" href="fonts/inter/inter.css" media="print" onload="this.media='all'">
+<link rel="stylesheet" href="fonts/space-grotesk/space-grotesk.css" media="print" onload="this.media='all'">
+<link rel="stylesheet" href="fonts/jetbrains-mono/jetbrains-mono.css" media="print" onload="this.media='all'">
+<link rel="stylesheet" href="vendor/fontawesome/css/all.min.css" media="print" onload="this.media='all'">
+<noscript>
+  <link rel="stylesheet" href="fonts/inter/inter.css">
+  <link rel="stylesheet" href="fonts/space-grotesk/space-grotesk.css">
+  <link rel="stylesheet" href="fonts/jetbrains-mono/jetbrains-mono.css">
+  <link rel="stylesheet" href="vendor/fontawesome/css/all.min.css">
+</noscript>
 <script>
   /* dc-runtime resource override (built-in extension point in support.js —
      cdnScriptFor() checks window.__resources[url] before falling back to the CDN URL).
@@ -122,7 +132,10 @@
 }
 </script>
 
-<script src="./support.js"></script>
+<!-- SPEED FIX (7.08.2026): defer — support.js already waits for DOMContentLoaded
+     internally before mounting (confirmed in source), so this changes nothing about
+     correctness, it just stops it from blocking HTML parsing while it downloads. -->
+<script src="./support.js" defer></script>
 </head>
 <body>
 <!-- ===== SEO/NOSCRIPT STATIC FALLBACK =====
