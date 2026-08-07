@@ -13,12 +13,38 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<!-- ===== RESOURCE HINTS (speed up the render-blocking font/icon requests below) ===== -->
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+<!-- ===== RESOURCE HINTS ===== -->
 <link rel="dns-prefetch" href="https://www.googletagmanager.com">
 <link rel="dns-prefetch" href="https://www.clarity.ms">
+
+<!-- ===== SPEED FIX (6.08.2026): fonts, Font Awesome and React/ReactDOM used to load
+     from external CDNs (fonts.googleapis.com, cdnjs.cloudflare.com, unpkg.com) — three
+     extra DNS+TLS round trips, and worse, the font/icon <link> tags used to live inside
+     the <x-dc><helmet> block, so the browser only discovered them AFTER support.js ran
+     and injected them into <head>, not at initial HTML parse time. Now everything is
+     self-hosted, same-origin, and declared here directly so the browser's preloader
+     finds it immediately. ===== -->
+<link rel="preload" as="style" href="fonts/inter/inter.css">
+<link rel="preload" as="style" href="fonts/space-grotesk/space-grotesk.css">
+<link rel="preload" as="font" href="fonts/inter/files/inter-latin-400-normal.woff2" type="font/woff2" crossorigin>
+<link rel="preload" as="font" href="fonts/inter/files/inter-cyrillic-400-normal.woff2" type="font/woff2" crossorigin>
+<link rel="preload" as="font" href="fonts/space-grotesk/files/space-grotesk-latin-700-normal.woff2" type="font/woff2" crossorigin>
+<link rel="preload" as="script" href="vendor/react/react.production.min.js">
+<link rel="preload" as="script" href="vendor/react/react-dom.production.min.js">
+<link rel="stylesheet" href="fonts/inter/inter.css">
+<link rel="stylesheet" href="fonts/space-grotesk/space-grotesk.css">
+<link rel="stylesheet" href="fonts/jetbrains-mono/jetbrains-mono.css">
+<link rel="stylesheet" href="vendor/fontawesome/css/all.min.css">
+<script>
+  /* dc-runtime resource override (built-in extension point in support.js —
+     cdnScriptFor() checks window.__resources[url] before falling back to the CDN URL).
+     Setting this also skips the runtime's redundant self-fetch(location.href) in boot(),
+     since that code path is itself gated on "if (!window.__resources)". */
+  window.__resources = {
+    "https://unpkg.com/react@18.3.1/umd/react.production.min.js": "vendor/react/react.production.min.js",
+    "https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js": "vendor/react/react-dom.production.min.js"
+  };
+</script>
 
 <!-- ===== MICROSOFT CLARITY (same project as case-detail.html) ===== -->
 <script type="text/javascript">
@@ -167,8 +193,8 @@
 <x-dc>
 <helmet>
   <link rel="icon" type="image/svg+xml" href="img/favicon.svg">
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700;800&amp;family=Inter:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;500;700&amp;display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <!-- Fonts + Font Awesome moved to the static <head> above and self-hosted (6.08.2026 speed fix) —
+       loading them from here meant the browser only discovered them after support.js ran. -->
   <style>
     *,*::before,*::after{box-sizing:border-box;}
     html{scroll-behavior:smooth;}
@@ -187,6 +213,7 @@
     @keyframes marqueeScroll{from{transform:translateX(0);}to{transform:translateX(-50%);}}
     @keyframes spinSlow{from{transform:rotate(0deg);}to{transform:rotate(360deg);}}
     @keyframes bounceArrow{0%,100%{transform:translateY(0);}50%{transform:translateY(6px);}}
+    @keyframes bounceArrowX{0%,100%{transform:translateX(0);}50%{transform:translateX(6px);}}
     @keyframes glassGlare{0%{transform:translateX(-120%) translateY(-120%) rotate(20deg);opacity:.35;}50%{transform:translateX(0%) translateY(0%) rotate(20deg);opacity:.75;}100%{transform:translateX(120%) translateY(120%) rotate(20deg);opacity:.35;}}
     @keyframes gradientShift{0%{background-position:0% 50%;}100%{background-position:200% 50%;}}
     @keyframes glowPulse{0%,100%{box-shadow:0 0 12px 2px rgba(124,92,255,.35);}50%{box-shadow:0 0 24px 6px rgba(0,217,200,.4);}}
@@ -244,10 +271,14 @@
           Влад — <span style="background:var(--g1);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">веб-розробник</span>
         </h1>
         <p style="font-size:16px;color:var(--t2);line-height:1.6;max-width:460px;{{ heroPMargin }}">Роблю сайти, лендинги та CRM під ключ — швидко, без конструкторів.</p>
-        <div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:44px;{{ heroBtnRowStyle }}">
-          <a data-cursor-hover="" onMouseMove="{{ magMove }}" onMouseLeave="{{ magLeave }}" onClick="{{ navCasesClick }}" href="#cases" style="display:inline-flex;align-items:center;gap:9px;padding:15px 28px;background:var(--g1);color:#fff;border-radius:11px;font-size:15px;font-weight:600;text-decoration:none;box-shadow:0 6px 28px rgba(124,92,255,.35);transition:transform .15s ease;"><i class="fas fa-eye"></i>Дивитись кейси</a>
-          <a data-cursor-hover="" onMouseMove="{{ magMove }}" onMouseLeave="{{ magLeave }}" href="https://t.me/vladoss_011" target="_blank" style="display:inline-flex;align-items:center;gap:9px;padding:15px 28px;background:var(--surf);border:1px solid var(--bd);color:var(--t1);border-radius:11px;font-size:15px;font-weight:600;text-decoration:none;transition:transform .15s ease;"><i class="fab fa-telegram"></i>Написати в Telegram</a>
+        <div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:14px;{{ heroBtnRowStyle }}">
+          <a data-cursor-hover="" onMouseMove="{{ magMove }}" onMouseLeave="{{ magLeave }}" href="https://t.me/vladoss_011" target="_blank" style="display:inline-flex;align-items:center;gap:9px;padding:15px 28px;background:var(--g1);color:#fff;border-radius:11px;font-size:15px;font-weight:600;text-decoration:none;box-shadow:0 6px 28px rgba(124,92,255,.35);transition:transform .15s ease;"><i class="fab fa-telegram"></i>Написати в Telegram</a>
+          <a data-cursor-hover="" onMouseMove="{{ magMove }}" onMouseLeave="{{ magLeave }}" onClick="{{ navCasesClick }}" href="#cases" style="display:inline-flex;align-items:center;gap:9px;padding:15px 28px;background:var(--surf);border:1px solid var(--bd);color:var(--t1);border-radius:11px;font-size:15px;font-weight:600;text-decoration:none;transition:transform .15s ease;"><i class="fas fa-eye"></i>Дивитись кейси</a>
         </div>
+        <p style="font-size:13px;color:var(--t3);margin:0 0 30px;display:flex;align-items:center;gap:6px;{{ heroBtnRowStyle }}">Або одразу запитайте про ціну в чаті поруч
+          <svg style="{{ heroArrowDesktopStyle }}" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--accl)" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+          <svg style="{{ heroArrowMobileStyle }}" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--accl)" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><polyline points="19 12 12 19 5 12"></polyline></svg>
+        </p>
         <div style="{{ heroStatsGridStyle }}">
           <sc-for list="{{ heroStats }}" as="s" hint-placeholder-count="4">
             <div>
@@ -312,7 +343,7 @@
           </div>
         </div>
         </div>
-        <div style="position:absolute;bottom:calc(100% + 10px);{{ heroInviteLeftStyle }}max-width:230px;width:max-content;padding:12px 17px;background:var(--g1);border-radius:15px;font-size:12.5px;font-weight:600;color:#fff;display:flex;align-items:center;gap:9px;box-shadow:0 16px 38px rgba(124,92,255,.45);animation:inviteDrift 28s cubic-bezier(.45,0,.55,1) infinite;will-change:transform;transition:max-width .5s cubic-bezier(.4,0,.2,1),padding .5s ease;pointer-events:none;z-index:5;">
+        <div data-cursor-hover="" onClick="{{ inviteClick }}" style="position:absolute;bottom:calc(100% + 10px);{{ heroInviteLeftStyle }}max-width:230px;width:max-content;padding:12px 17px;background:var(--g1);border-radius:15px;font-size:12.5px;font-weight:600;color:#fff;display:flex;align-items:center;gap:9px;box-shadow:0 16px 38px rgba(124,92,255,.45);animation:inviteDrift 28s cubic-bezier(.45,0,.55,1) infinite;will-change:transform;transition:max-width .5s cubic-bezier(.4,0,.2,1),padding .5s ease,transform .15s ease;cursor:pointer;z-index:5;" style-active="transform:scale(.96);">
           <i class="fas fa-comment-dots" style="font-size:14px;flex-shrink:0;"></i>
           <span style="transition:opacity .25s ease;opacity:{{ inviteFade }};">{{ inviteText }}</span>
         </div>
@@ -365,8 +396,8 @@
                 </sc-for>
               </div>
               <div style="{{ c.btnRowStyle }}">
-                <a data-cursor-hover="" href="{{ c.detailHref }}" style-hover="box-shadow:0 6px 24px rgba(124,92,255,.35),0 0 22px rgba(124,92,255,.5);" style-active="transform:scale(.95);" style="display:inline-flex;align-items:center;gap:6px;padding:10px 20px;border-radius:9px;font-size:13px;font-weight:600;text-decoration:none;background:var(--g1);color:#fff;transition:transform .2s ease,box-shadow .35s ease;"><i class="fas fa-search"></i>Переглянути кейс</a>
-                <a data-cursor-hover="" href="{{ c.liveHref }}" target="_blank" style-hover="box-shadow:0 0 0 1px var(--acc);border-color:var(--acc);color:var(--accl);" style-active="transform:scale(.95);" style="display:inline-flex;align-items:center;gap:6px;padding:10px 20px;border-radius:9px;font-size:13px;font-weight:600;text-decoration:none;background:var(--bg2);border:1px solid var(--bd);color:var(--t2);transition:transform .2s ease,box-shadow .35s ease,border-color .3s ease,color .3s ease;"><i class="fas fa-external-link-alt"></i>Живий проєкт</a>
+                <a data-cursor-hover="" href="{{ c.detailHref }}" style-hover="box-shadow:0 6px 24px rgba(124,92,255,.35),0 0 22px rgba(124,92,255,.5);" style-active="transform:scale(.95);" style="display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:14px 32px;border-radius:10px;font-size:14px;font-weight:600;text-decoration:none;background:var(--g1);color:#fff;transition:transform .2s ease,box-shadow .35s ease;{{ c.btnWidth }}flex:{{ c.btnFlex }};"><i class="fas fa-search"></i>Переглянути кейс</a>
+                <a data-cursor-hover="" href="{{ c.liveHref }}" target="_blank" style-hover="box-shadow:0 0 0 1px var(--acc);border-color:var(--acc);color:var(--accl);" style-active="transform:scale(.95);" style="display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:14px 32px;border-radius:10px;font-size:14px;font-weight:600;text-decoration:none;background:var(--bg2);border:1px solid var(--bd);color:var(--t2);transition:transform .2s ease,box-shadow .35s ease,border-color .3s ease,color .3s ease;{{ c.btnWidth }}flex:{{ c.btnFlex }};"><i class="fas fa-external-link-alt"></i>Живий проєкт</a>
               </div>
             </div>
           </div>
@@ -393,7 +424,7 @@
         <sc-for list="{{ processSteps }}" as="p" hint-placeholder-count="4">
           <div data-process-idx="{{ p.idx }}" style="padding:30px 26px;background:var(--surf);border:1px solid {{ p.borderColor }};border-radius:16px;transition:transform .4s cubic-bezier(.2,.8,.2,1),opacity .5s ease,border-color .4s ease,box-shadow .4s ease;opacity:{{ p.opacity }};transform:{{ p.translate }};box-shadow:{{ p.boxShadow }};position:relative;">
             <div style="{{ p.dotStyle }}"></div>
-            <div style="font-family:'Space Grotesk',sans-serif;font-size:34px;font-weight:700;background:{{ p.numBg }};-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;opacity:{{ p.numOpacity }};margin-bottom:12px;display:inline-block;transform:{{ p.numScale }};transition:transform .35s cubic-bezier(.34,1.56,.64,1),opacity .35s ease;animation:{{ p.numAnim }};">{{ p.num }}</div>
+            <div style="font-family:'Space Grotesk',sans-serif;font-size:34px;font-weight:700;background:{{ p.numBg }};-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;opacity:{{ p.numOpacity }};margin-bottom:12px;display:block;text-align:center;transform:{{ p.numScale }};transition:transform .35s cubic-bezier(.34,1.56,.64,1),opacity .35s ease;animation:{{ p.numAnim }};">{{ p.num }}</div>
             <h3 style="font-size:17px;font-weight:700;margin:0 0 10px;color:{{ p.titleColor }};transition:color .35s ease;">{{ p.title }}</h3>
             <p style="font-size:13.5px;color:var(--t2);line-height:1.7;margin:0;">{{ p.desc }}</p>
           </div>
@@ -521,7 +552,7 @@
         </div>
         <p style="text-align:center;font-size:12px;color:var(--t3);margin:0 0 20px;">Орієнтовна ціна. Фінальна вартість — після обговорення деталей.</p>
         <div style="text-align:center;">
-          <a data-cursor-hover="" href="https://t.me/vladoss_011" target="_blank" style-hover="box-shadow:0 6px 24px rgba(124,92,255,.35),0 0 26px rgba(124,92,255,.5);" style-active="transform:scale(.95);" style="display:inline-flex;align-items:center;gap:9px;padding:14px 34px;background:var(--g1);color:#fff;border-radius:11px;font-size:14.5px;font-weight:600;text-decoration:none;box-shadow:0 6px 24px rgba(124,92,255,.35);transition:transform .2s ease,box-shadow .35s ease;"><i class="fab fa-telegram"></i>Обговорити проєкт</a>
+          <a data-cursor-hover="" href="{{ calcTelegramHref }}" target="_blank" style-hover="box-shadow:0 6px 24px rgba(124,92,255,.35),0 0 26px rgba(124,92,255,.5);" style-active="transform:scale(.95);" style="display:inline-flex;align-items:center;gap:9px;padding:14px 34px;background:var(--g1);color:#fff;border-radius:11px;font-size:14.5px;font-weight:600;text-decoration:none;box-shadow:0 6px 24px rgba(124,92,255,.35);transition:transform .2s ease,box-shadow .35s ease;"><i class="fab fa-telegram"></i>Обговорити проєкт</a>
         </div>
       </div>
     </div>
@@ -531,15 +562,27 @@
     <section id="contact" style="padding: 100px 24px; position: relative; z-index: 1; top: -100px">
     <div style="max-width:680px;margin:0 auto;{{ ctaBoxPad }}background:var(--surf);border:1px solid var(--bd);border-radius:24px;text-align:center;">
       <div style="display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:18px;flex-wrap:wrap;">
-        <img src="img/me-inf.webp" alt="Влад — веб-розробник" style="width:42px;height:42px;border-radius:50%;object-fit:cover;border:2px solid var(--acc);flex-shrink:0;">
+        <img data-cursor-hover="" onClick="{{ toggleAbout }}" src="img/me-inf.webp" alt="Влад — веб-розробник" style="width:42px;height:42px;border-radius:50%;object-fit:cover;border:2px solid var(--acc);flex-shrink:0;cursor:pointer;transition:transform .2s ease;" style-hover="transform:scale(1.08);">
         <span style="font-size:13px;color:var(--t2);font-weight:600;">Пишу код сам. Терміни дотримую завжди.</span>
       </div>
       <h2 style="font-family:'Space Grotesk',sans-serif;{{ ctaTitleSize }}font-weight:700;margin:0 0 14px;">Готові обговорити проєкт?</h2>
-      <p style="{{ ctaDescSize }}color:var(--t2);line-height:1.6;margin:0 0 30px;">Оберіть зручний спосіб зв'язку — Telegram, пошта або телефон. Відповідаю швидко.</p>
-      <div style="{{ ctaBtnRowStyle }}">
-        <a data-cursor-hover="" href="https://t.me/vladoss_011" target="_blank" style-hover="box-shadow:0 0 26px rgba(124,92,255,.5);" style-active="transform:scale(.96);" style="display:inline-flex;{{ ctaBtnWidth }}align-items:center;gap:10px;{{ ctaBtnPad }}background:var(--g1);color:#fff;border-radius:12px;{{ ctaBtnFont }}font-weight:700;text-decoration:none;transition:transform .2s ease,box-shadow .35s ease;"><i class="fab fa-telegram"></i>@vladoss_011</a>
-        <div data-cursor-hover="" onClick="{{ copyEmail }}" style-hover="box-shadow:0 0 0 1px var(--acc);border-color:var(--acc);" style-active="transform:scale(.96);" style="display:inline-flex;{{ ctaBtnWidth }}align-items:center;gap:10px;{{ ctaBtnPad }}background:var(--bg2);border:1px solid var(--bd);color:var(--t1);border-radius:12px;{{ ctaBtnFont }}font-weight:700;cursor:pointer;transition:transform .2s ease,box-shadow .35s ease,border-color .3s ease;"><i class="fas fa-envelope"></i>vladpetrenko66@gmail.com</div>
-        <div data-cursor-hover="" onClick="{{ copyPhone }}" style-hover="box-shadow:0 0 0 1px var(--acc);border-color:var(--acc);" style-active="transform:scale(.96);" style="display:inline-flex;{{ ctaBtnWidth }}align-items:center;gap:10px;{{ ctaBtnPad }}background:var(--bg2);border:1px solid var(--bd);color:var(--t1);border-radius:12px;{{ ctaBtnFont }}font-weight:700;cursor:pointer;transition:transform .2s ease,box-shadow .35s ease,border-color .3s ease;"><i class="fas fa-phone"></i>+380 96 550 4634</div>
+      <p style="{{ ctaDescSize }}color:var(--t2);line-height:1.6;margin:0 0 26px;">Напишіть у Telegram — відповідаю швидко. Або залиште заявку нижче, і я сам зв'яжусь.</p>
+      <div style="{{ ctaBtnRowStyle }}margin-bottom:26px;">
+        <a data-cursor-hover="" href="https://t.me/vladoss_011" target="_blank" style-hover="box-shadow:0 0 26px rgba(124,92,255,.5);" style-active="transform:scale(.96);" style="display:inline-flex;{{ ctaBtnWidth }}align-items:center;justify-content:center;gap:10px;{{ ctaBtnPad }}background:var(--g1);color:#fff;border-radius:12px;{{ ctaBtnFont }}font-weight:700;text-decoration:none;transition:transform .2s ease,box-shadow .35s ease;"><i class="fab fa-telegram"></i>@vladoss_011</a>
+        <div data-cursor-hover="" onClick="{{ copyEmail }}" style-hover="border-color:var(--acc);color:var(--accl);" style-active="transform:scale(.96);" style="display:inline-flex;{{ ctaBtnWidth }}align-items:center;justify-content:center;gap:10px;{{ ctaBtnPad }}background:var(--bg2);border:1px solid var(--bd);color:var(--t1);border-radius:12px;{{ ctaBtnFont }}font-weight:700;cursor:pointer;transition:transform .2s ease,border-color .3s ease,color .3s ease;"><i class="fas fa-envelope"></i>vladpetrenko66@gmail.com</div>
+        <div data-cursor-hover="" onClick="{{ copyPhone }}" style-hover="border-color:var(--acc);color:var(--accl);" style-active="transform:scale(.96);" style="display:inline-flex;{{ ctaBtnWidth }}align-items:center;justify-content:center;gap:10px;{{ ctaBtnPad }}background:var(--bg2);border:1px solid var(--bd);color:var(--t1);border-radius:12px;{{ ctaBtnFont }}font-weight:700;cursor:pointer;transition:transform .2s ease,border-color .3s ease,color .3s ease;"><i class="fas fa-phone"></i>+380 96 550 46 34</div>
+      </div>
+      <div style="display:flex;align-items:center;gap:14px;margin:0 0 26px;">
+        <div style="flex:1;height:1px;background:var(--bd);"></div>
+        <span style="font-size:12px;color:var(--t3);text-transform:uppercase;letter-spacing:1px;">або</span>
+        <div style="flex:1;height:1px;background:var(--bd);"></div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:12px;text-align:left;max-width:420px;margin:0 auto;">
+        <input id="vleadName" type="text" placeholder="Ваше ім'я" style="width:100%;padding:13px 16px;background:var(--bg2);border:1px solid var(--bd);border-radius:10px;color:var(--t1);font-size:14px;font-family:inherit;outline:none;box-sizing:border-box;">
+        <input id="vleadContact" type="text" placeholder="Телефон, email або Telegram" style="width:100%;padding:13px 16px;background:var(--bg2);border:1px solid var(--bd);border-radius:10px;color:var(--t1);font-size:14px;font-family:inherit;outline:none;box-sizing:border-box;">
+        <textarea id="vleadComment" rows="3" placeholder="Коротко про проєкт (необов'язково)" style="width:100%;padding:13px 16px;background:var(--bg2);border:1px solid var(--bd);border-radius:10px;color:var(--t1);font-size:14px;font-family:inherit;outline:none;resize:vertical;box-sizing:border-box;"></textarea>
+        <div data-cursor-hover="" onClick="{{ submitLead }}" style-hover="box-shadow:0 0 26px rgba(124,92,255,.5);" style-active="transform:scale(.97);" style="display:inline-flex;align-items:center;justify-content:center;gap:9px;padding:14px 24px;background:var(--g1);color:#fff;border-radius:11px;font-size:14.5px;font-weight:700;cursor:pointer;transition:transform .2s ease,box-shadow .35s ease;margin-top:2px;"><i class="fas fa-paper-plane"></i>Надіслати заявку</div>
+        <p style="font-size:12px;color:var(--t3);text-align:center;margin:2px 0 0;">Лист прийде мені напряму на пошту — нічого відкривати не потрібно.</p>
       </div>
     </div>
   </section><div style="max-width:760px;margin:0 auto;">
@@ -589,9 +632,22 @@
     </div>
     <div data-cursor-hover="" onClick="{{ dismissNudge }}" style="color:var(--t3);cursor:pointer;font-size:15px;flex-shrink:0;padding:10px;margin:-10px;">✕</div>
   </div>
+
+  <!-- Пасхалка: клік по аватарці в блоці контактів відкриває коротку картку "про мене" -->
+  <div data-cursor-hover="" onClick="{{ toggleAbout }}" style="{{ aboutBackdropStyle }}">
+    <div onClick="{{ stopProp }}" style="{{ aboutCardStyle }}">
+      <div data-cursor-hover="" onClick="{{ toggleAbout }}" style="position:absolute;top:16px;right:16px;width:30px;height:30px;border-radius:50%;background:var(--bg2);border:1px solid var(--bd);display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--t3);font-size:14px;">✕</div>
+      <img src="img/me-inf.webp" alt="Влад — веб-розробник" style="width:84px;height:84px;border-radius:50%;object-fit:cover;border:3px solid var(--acc);margin:0 auto 18px;display:block;">
+      <h3 style="font-family:'Space Grotesk',sans-serif;font-size:21px;font-weight:700;margin:0 0 4px;">Влад</h3>
+      <div style="font-size:13px;color:var(--accl);font-weight:600;margin-bottom:18px;">Веб-розробник · Україна</div>
+      <p style="font-size:14px;color:var(--t2);line-height:1.7;margin:0 0 22px;text-align:left;">Привіт! Я пишу сайти, лендинги та CRM-системи сам, з нуля — без конструкторів і без команди посередників. За 5 років — 20+ проєктів, і більшість клієнтів повертаються знову. Ціную чіткі терміни й пряме спілкування: пишете мені особисто, а не менеджеру.</p>
+      <a data-cursor-hover="" href="https://t.me/vladoss_011" target="_blank" style="display:inline-flex;align-items:center;gap:8px;padding:11px 22px;background:var(--g1);color:#fff;border-radius:10px;font-size:13.5px;font-weight:700;text-decoration:none;"><i class="fab fa-telegram"></i>Написати в Telegram</a>
+    </div>
+  </div>
 </div>
 
 </x-dc>
+
 <script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1440,&quot;height&quot;:900},&quot;accentColor&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:&quot;#6c5ce7&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;options&quot;:[&quot;#6c5ce7&quot;,&quot;#5b6cf0&quot;,&quot;#8b5cf6&quot;,&quot;#7c5cff&quot;]}}">
 class Component extends DCLogic {
   state = {
@@ -612,6 +668,7 @@ class Component extends DCLogic {
     testiChars: [0, 0, 0],
     processOn: [false, false, false, false],
     processActive: -1,
+    aboutOpen: false,
     diffOn: [false, false, false, false],
     toast: false,
     toastMsg: '',
@@ -701,6 +758,21 @@ class Component extends DCLogic {
     }, 700);
   };
 
+  inviteClick = () => {
+    const term = document.getElementById('termBody');
+    if (term) {
+      const top = term.getBoundingClientRect().top + window.scrollY - 100;
+      window.scrollTo({ top, behavior: 'smooth' });
+    }
+    clearTimeout(this.inviteFollowTimer);
+    this.inviteFollowTimer = setTimeout(() => {
+      this.setState(s => ({
+        termLines: [...s.termLines, { isCmd: false, isOut: true, text: 'Бачу, ви натиснули! Підкажіть, що вас цікавить — ціна, терміни чи кейси?' }],
+        examplesOpen: true,
+      }));
+    }, 500);
+  };
+
   componentDidUpdate() {
     const el = document.getElementById('termBody');
     if (el) el.scrollTop = el.scrollHeight;
@@ -721,6 +793,7 @@ class Component extends DCLogic {
     clearTimeout(this.clarifyGraceTimer);
     clearTimeout(this.idleTimer);
     clearTimeout(this.nudgeFollowTimer);
+    clearTimeout(this.inviteFollowTimer);
     clearTimeout(this.answerTimer);
     clearTimeout(this.answerCharTimer);
     if (this.testiTimers) this.testiTimers.forEach(t => clearInterval(t));
@@ -1571,6 +1644,49 @@ class Component extends DCLogic {
     this.trackEvent('lead_generated', { lead_source: 'home:phone_copy' });
   };
 
+  submitLead = (e) => {
+    e && e.preventDefault && e.preventDefault();
+    const nameEl = document.getElementById('vleadName');
+    const contactEl = document.getElementById('vleadContact');
+    const commentEl = document.getElementById('vleadComment');
+    const name = nameEl ? nameEl.value.trim() : '';
+    const contact = contactEl ? contactEl.value.trim() : '';
+    const comment = commentEl ? commentEl.value.trim() : '';
+    const showToast = (msg, ms) => {
+      this.setState({ toast: true, toastMsg: msg });
+      clearTimeout(this.toastTimer);
+      this.toastTimer = setTimeout(() => this.setState({ toast: false }), ms || 2400);
+    };
+    if (!name || !contact) { showToast("Заповніть ім'я і телефон/email"); return; }
+    showToast('Надсилаю...', 8000);
+    fetch('https://formsubmit.co/ajax/vladpetrenko66@gmail.com', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+      body: JSON.stringify({ _subject: 'Заявка з сайту vlad.dev', name, contact, comment: comment || '—' }),
+    }).then((res) => {
+      if (!res.ok) throw new Error('bad status ' + res.status);
+      return res.json().catch(() => ({}));
+    }).then((data) => {
+      if (nameEl) nameEl.value = '';
+      if (contactEl) contactEl.value = '';
+      if (commentEl) commentEl.value = '';
+      const ok = data && (data.success === true || data.success === 'true');
+      if (!ok) {
+        showToast('Заявку прийнято, але потрібне підтвердження email — перевір пошту vladpetrenko66@gmail.com (і спам).', 5500);
+      } else {
+        showToast('Заявку надіслано! Відповім найближчим часом.', 3200);
+      }
+      try { if (window.gtag) gtag('event', 'conversion', { send_to: 'AW-18368345385/bbvYCO-Ipd0cEKnq2rZE' }); } catch (err) {}
+      this.trackEvent('cta_click', { cta_type: 'lead_form', cta_location: 'contact' });
+      this.trackEvent('lead_generated', { lead_source: 'home:lead_form' });
+    }).catch(() => {
+      showToast('Не вдалося надіслати. Напишіть напряму в Telegram.', 3600);
+    });
+  };
+
+  toggleAbout = () => this.setState(s => ({ aboutOpen: !s.aboutOpen }));
+  stopProp = (e) => e && e.stopPropagation && e.stopPropagation();
+
   renderVals() {
     const s = this.state;
     const acc = this.props.accentColor || '#6c5ce7';
@@ -1597,6 +1713,8 @@ class Component extends DCLogic {
       wrapStyle: (s.isMobile ? '' : c.galleryOrder) + 'position:relative;overflow:hidden;background:var(--bg2);border:1px solid var(--bd2);' + (s.isMobile ? 'height:190px;' : ''),
       infoPad: s.isMobile ? 'padding:22px;' : 'padding:36px;',
       btnRowStyle: s.isMobile ? 'display:flex;gap:12px;flex-wrap:wrap;justify-content:center;' : 'display:flex;gap:12px;flex-wrap:wrap;',
+      btnWidth: s.isMobile ? 'width:100%;' : '',
+      btnFlex: s.isMobile ? 'none' : '1',
       openCase: () => { this.trackEvent('cta_click', { cta_type: 'case_open', cta_location: 'cases', case_title: c.title }); window.location.href = c.detailHref; },
       glareDelay: (c.idx * 1.6) + 's',
     }));
@@ -1615,9 +1733,9 @@ class Component extends DCLogic {
         translate: s.processOn[i] ? (active ? 'scale(1.045)' : 'scale(1)') : 'translateY(18px) scale(1)',
         borderColor: active ? 'var(--acc)' : 'var(--bd)',
         boxShadow: active ? '0 22px 46px -16px rgba(124,92,255,.45)' : 'none',
-        numBg: active ? 'var(--g1)' : 'var(--g1)',
-        numOpacity: active ? '1' : '.5',
-        numScale: active ? 'scale(1.1)' : 'scale(1)',
+        numBg: 'var(--g1)',
+        numOpacity: '1',
+        numScale: 'scale(1)',
         numAnim: active ? 'processNumPop .5s cubic-bezier(.34,1.56,.64,1)' : 'none',
         titleColor: active ? 'var(--accl)' : 'var(--t1)',
         dotStyle: active ? 'position:absolute;top:16px;right:16px;width:8px;height:8px;border-radius:50%;background:var(--acc);animation:pulseDot 1.4s ease infinite;' : 'display:none;',
@@ -1705,6 +1823,13 @@ class Component extends DCLogic {
       return { ...a, bg: checked ? 'var(--accg)' : 'var(--bg2)', border: checked ? 'var(--acc)' : 'var(--bd)', iconColor: checked ? 'var(--accl)' : 'var(--t2)', onClick: () => this.toggleAddon(a.key) };
     });
 
+    const calcSelectedType = calcTypeData.find(ct => ct.key === s.calcType) || calcTypeData[0];
+    const calcSelectedAddons = addonData.filter(a => !!s.calcAddons[a.key]);
+    let calcMsg = `Привіт! Порахував на калькуляторі: ${calcSelectedType.label}`;
+    if (calcSelectedAddons.length) calcMsg += ` + ${calcSelectedAddons.map(a => a.label).join(', ')}`;
+    calcMsg += `. Орієнтовна ціна: $${s.calcDisplay} (${(s.calcDisplay * 45).toLocaleString('uk-UA')}₴). Хочу дізнатись детальніше!`;
+    const calcTelegramHref = 'https://t.me/vladoss_011?text=' + encodeURIComponent(calcMsg);
+
     const faqData = [
       { q: 'Скільки часу займає розробка сайту?', a: 'Лендинг — приблизно 2-3 дні. Багатосторінковий сайт — 5-10 днів. CRM або складна система — обговорюється індивідуально.' },
       { q: 'Що входить у вартість?', a: 'Унікальний дизайн, повністю кодовий сайт, адаптив під усі пристрої, SEO оптимізація, підключення потрібних сервісів.' },
@@ -1761,6 +1886,8 @@ class Component extends DCLogic {
       heroPMargin: s.isMobile ? 'margin:0 auto 32px;' : 'margin:0 0 32px;',
       heroStatsGridStyle: s.isMobile ? 'display:grid;grid-template-columns:repeat(4,1fr);gap:14px;max-width:420px;margin:0 auto;' : 'display:grid;grid-template-columns:repeat(4,1fr);gap:20px;max-width:480px;',
       heroInviteLeftStyle: s.isMobile ? 'left:44px;' : 'left:0%;',
+      heroArrowDesktopStyle: s.isMobile ? 'display:none;' : 'display:inline-flex;flex-shrink:0;animation:bounceArrowX 1.4s ease-in-out infinite;filter:drop-shadow(0 0 6px rgba(124,92,255,.55));',
+      heroArrowMobileStyle: s.isMobile ? 'display:inline-flex;flex-shrink:0;animation:bounceArrow 1.4s ease-in-out infinite;filter:drop-shadow(0 0 6px rgba(124,92,255,.55));' : 'display:none;',
       processGridCols: s.isMobile ? '1fr' : 'repeat(4,1fr)',
       processGridWrapStyle: s.isMobile ? 'position:relative;display:grid;grid-template-columns:1fr;gap:20px;padding-right:18px;' : 'position:relative;display:grid;grid-template-columns:repeat(4,1fr);gap:24px;',
       processSvgStyle: s.isMobile ? 'display:none;' : 'position:absolute;top:-24px;left:0;width:100%;height:4px;',
@@ -1796,6 +1923,7 @@ class Component extends DCLogic {
       termLines: s.termLines, termTyping: s.termTyping, termTypingActive: s.termTypingActive, termReady: s.termReady, termInput: s.termInput,
       calcDisplay: s.calcDisplay,
       calcDisplayUah: (s.calcDisplay * 45).toLocaleString('uk-UA'),
+      calcTelegramHref,
       borderWrapStyle: (s.termTypingActive || s.answering)
         ? 'padding:2px;border-radius:16px;background:linear-gradient(90deg,var(--acc),var(--teal),var(--sig),var(--accl),var(--acc));background-size:300% 100%;animation:gradientShift 4.5s ease-in-out infinite,glowPulse 2.4s ease-in-out infinite;transition:background 1.1s ease;'
         : 'padding:2px;border-radius:16px;background:var(--acc);animation:pulseBorderBlue 2.6s ease-in-out infinite;transition:background 1.1s ease;',
@@ -1816,11 +1944,19 @@ class Component extends DCLogic {
             ? 'position:fixed;bottom:24px;right:24px;max-width:300px;padding:16px 18px;background:var(--surf);border:1px solid var(--acc);border-radius:16px;box-shadow:0 16px 40px rgba(0,0,0,.5),0 0 0 4px var(--accg);z-index:1500;display:flex;align-items:center;gap:12px;transform:translateY(0);opacity:1;transition:all .4s cubic-bezier(.4,0,.2,1);'
             : 'position:fixed;bottom:24px;right:24px;max-width:300px;padding:16px 18px;background:var(--surf);border:1px solid var(--acc);border-radius:16px;box-shadow:0 16px 40px rgba(0,0,0,.5);z-index:1500;display:flex;align-items:center;gap:12px;transform:translateY(20px);opacity:0;pointer-events:none;transition:all .4s cubic-bezier(.4,0,.2,1);'),
 
+      aboutBackdropStyle: s.aboutOpen
+        ? 'position:fixed;inset:0;background:rgba(8,8,10,.72);z-index:2000;display:flex;align-items:center;justify-content:center;padding:24px;opacity:1;pointer-events:auto;transition:opacity .3s ease;backdrop-filter:blur(3px);'
+        : 'position:fixed;inset:0;background:rgba(8,8,10,.72);z-index:2000;display:flex;align-items:center;justify-content:center;padding:24px;opacity:0;pointer-events:none;transition:opacity .3s ease;backdrop-filter:blur(3px);',
+      aboutCardStyle: s.aboutOpen
+        ? 'max-width:360px;width:100%;background:var(--surf);border:1px solid var(--acc);border-radius:22px;padding:36px 30px 30px;text-align:center;box-shadow:0 30px 70px rgba(0,0,0,.55);transform:scale(1) translateY(0);position:relative;transition:transform .35s cubic-bezier(.34,1.56,.64,1);'
+        : 'max-width:360px;width:100%;background:var(--surf);border:1px solid var(--acc);border-radius:22px;padding:36px 30px 30px;text-align:center;box-shadow:0 30px 70px rgba(0,0,0,.55);transform:scale(.92) translateY(10px);position:relative;transition:transform .35s cubic-bezier(.34,1.56,.64,1);',
+
       scrollToTop: this.scrollToTop, navCasesClick: this.navCasesClick, navCalcClick: this.navCalcClick, navTestiClick: this.navTestiClick,
       toggleMobile: this.toggleMobile, termChange: this.termChange, termKey: this.termKey, toggleExamples: this.toggleExamples,
       tiltMove: this.tiltMove, tiltLeave: this.tiltLeave, magMove: this.magMove, magLeave: this.magLeave, copyEmail: this.copyEmail,
       lensMove: this.lensMove, lensLeave: this.lensLeave,
       nudgeClick: this.nudgeClick, dismissNudge: this.dismissNudge, copyPhone: this.copyPhone,
+      submitLead: this.submitLead, toggleAbout: this.toggleAbout, stopProp: this.stopProp, inviteClick: this.inviteClick,
     };
   }
 }
