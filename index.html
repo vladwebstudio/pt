@@ -288,11 +288,7 @@
           <a data-cursor-hover="" onMouseMove="{{ magMove }}" onMouseLeave="{{ magLeave }}" href="https://t.me/vladoss_011?text=%D0%9F%D1%80%D0%B8%D0%B2%D1%96%D1%82%21%20%D0%9F%D0%BE%D0%B1%D0%B0%D1%87%D0%B8%D0%B2%20%D0%B2%D0%B0%D1%88%20%D1%81%D0%B0%D0%B9%D1%82%2C%20%D1%85%D0%BE%D1%87%D1%83%20%D0%B7%D0%B0%D0%BC%D0%BE%D0%B2%D0%B8%D1%82%D0%B8%20%D1%81%D0%B2%D1%96%D0%B9%2C%20%D1%86%D1%96%D0%BA%D0%B0%D0%B2%D0%BB%D1%8F%D1%82%D1%8C%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%96" target="_blank" style="display:inline-flex;align-items:center;gap:9px;padding:15px 28px;background:var(--g1);color:#fff;border-radius:11px;font-size:15px;font-weight:600;text-decoration:none;box-shadow:0 6px 28px rgba(124,92,255,.35);transition:transform .15s ease;"><i class="fab fa-telegram"></i>Написати в Telegram</a>
           <a data-cursor-hover="" onMouseMove="{{ magMove }}" onMouseLeave="{{ magLeave }}" onClick="{{ navCasesClick }}" href="#cases" style="display:inline-flex;align-items:center;gap:9px;padding:15px 28px;background:var(--surf);border:1px solid var(--bd);color:var(--t1);border-radius:11px;font-size:15px;font-weight:600;text-decoration:none;transition:transform .15s ease;"><i class="fas fa-eye"></i>Дивитись кейси</a>
         </div>
-        <p style="font-size:13px;color:var(--t3);margin:0 0 30px;display:flex;align-items:center;gap:6px;{{ heroBtnRowStyle }}">Або одразу запитайте про ціну в чаті поруч
-          <svg style="{{ heroArrowDesktopStyle }}" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--accl)" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
-          <svg style="{{ heroArrowMobileStyle }}" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--accl)" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><polyline points="19 12 12 19 5 12"></polyline></svg>
-        </p>
-        <div style="{{ heroStatsGridStyle }}">
+        <div style="{{ heroStatsGridStyle }}margin-top:30px;">
           <sc-for list="{{ heroStats }}" as="s" hint-placeholder-count="4">
             <div>
               <div style="font-family: 'Space Grotesk',sans-serif; font-size: 28px; font-weight: 700; background: var(--g1); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; text-align: center">{{ s.num }}</div>
