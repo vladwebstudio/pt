@@ -386,10 +386,10 @@
         <h3 style="font-size:15px;font-weight:700;color:var(--accl);margin:0 0 16px;">Тип проєкту</h3>
         <div style="{{ calcTypeGridStyle }}">
           <sc-for list="{{ calcTypes }}" as="ct" hint-placeholder-count="3">
-            <div data-cursor-hover="" onClick="{{ ct.onClick }}" style-hover="box-shadow:0 0 0 1px var(--acc);border-color:var(--acc);" style-active="transform:scale(.94);" style="cursor:pointer;{{ calcTypePad }}background:{{ ct.bg }};border:2px solid {{ ct.border }};border-radius:12px;display:flex;align-items:center;gap:9px;transition:all .3s ease;">
-              <i class="{{ ct.icon }}" style="{{ calcTypeIconSize }}color:{{ ct.iconColor }};flex-shrink:0;"></i>
-              <div style="min-width:0;">
-                <span style="display:block;{{ calcTypeLabelSize }}font-weight:600;margin-bottom:3px;">{{ ct.label }}</span>
+            <div data-cursor-hover="" onClick="{{ ct.onClick }}" style-hover="box-shadow:0 0 0 1px var(--acc);border-color:var(--acc);" style-active="transform:scale(.94);" style="cursor:pointer;{{ calcTypePad }}background:{{ ct.bg }};border:2px solid {{ ct.border }};border-radius:12px;{{ calcTypeCardLayout }}transition:all .3s ease;">
+              <i class="{{ ct.icon }}" style="{{ calcTypeIconSize }}{{ calcTypeIconMargin }}color:{{ ct.iconColor }};flex-shrink:0;"></i>
+              <div style="{{ calcTypeInnerStyle }}">
+                <span style="display:block;{{ calcTypeLabelSize }}font-weight:600;{{ calcTypeLabelMargin }}">{{ ct.label }}</span>
                 <div style="{{ calcTypePriceSize }}font-weight:700;color:var(--accl);">{{ ct.priceLabel }}</div>
               </div>
             </div>
@@ -1920,6 +1920,10 @@ class Component extends DCLogic {
       calcTypeIconSize: s.isMobile ? 'font-size:17px;' : 'font-size:22px;',
       calcTypeLabelSize: s.isMobile ? 'font-size:10.5px;' : 'font-size:12.5px;',
       calcTypePriceSize: s.isMobile ? 'font-size:12.5px;' : 'font-size:15px;',
+      calcTypeCardLayout: s.isMobile ? 'display:flex;flex-direction:column;align-items:center;text-align:center;gap:0;' : 'display:flex;align-items:center;gap:9px;',
+      calcTypeIconMargin: s.isMobile ? 'margin-bottom:6px;' : '',
+      calcTypeInnerStyle: s.isMobile ? 'min-width:0;width:100%;' : 'min-width:0;',
+      calcTypeLabelMargin: s.isMobile ? 'margin-bottom:3px;' : 'margin-bottom:3px;',
       calcAddonGridStyle: s.isMobile ? 'display:grid;grid-template-columns:repeat(2,1fr);gap:7px;margin-bottom:20px;' : 'display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-bottom:24px;',
       calcAddonPad: s.isMobile ? 'padding:9px 8px;' : 'padding:12px 14px;',
       calcAddonIconSize: s.isMobile ? 'font-size:12px;' : 'font-size:15px;',
