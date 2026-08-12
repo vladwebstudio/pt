@@ -292,6 +292,14 @@
           <i class="fas fa-bolt" style="color:var(--sig);font-size:11px;"></i>
           <span style="font-size:12.5px;color:var(--t3);">Відповідаю за 15-20 хв</span>
         </div>
+        <div style="{{ mobileTrustGridStyle }}">
+          <sc-for list="{{ heroStatsMobile }}" as="s" hint-placeholder-count="2">
+            <div>
+              <div style="font-family: 'Space Grotesk',sans-serif; font-size:19px; font-weight: 700; background: var(--g1); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; text-align: center">{{ s.num }}</div>
+              <div style="font-size:9px;margin-top:2px; color: var(--t3); text-transform: uppercase; letter-spacing: .6px; font-weight: 600; text-align: center">{{ s.label }}</div>
+            </div>
+          </sc-for>
+        </div>
         <div style="{{ heroStatsGridStyle }}">
           <sc-for list="{{ heroStats }}" as="s" hint-placeholder-count="4">
             <div>
@@ -1904,11 +1912,16 @@ class Component extends DCLogic {
       { num: '20+', label: 'Клієнтів' },
       { num: '5+', label: 'Повторних клієнтів' },
     ];
+    const heroStatsMobile = [
+      { num: '20+', label: 'Клієнтів' },
+      { num: '5', label: 'Років досвіду' },
+    ];
 
     return {
       accentColor: acc,
       navBarStyle: s.navScrolled ? 'background:rgba(8,8,10,0.85);backdrop-filter:blur(20px);border-bottom:1px solid var(--bd);' : 'background:transparent;',
       mobileHideStyle: s.isMobile ? 'display:none;' : '',
+      mobileTrustGridStyle: s.isMobile ? 'display:grid;grid-template-columns:repeat(2,1fr);gap:8px;max-width:220px;margin:0 auto 22px;' : 'display:none;',
       burgerStyle: s.isMobile ? 'display:flex;flex-direction:column;gap:5px;cursor:pointer;padding:8px;' : 'display:none;',
       burgerLine1: s.mobileOpen ? 'width:22px;height:2px;background:var(--t1);transform:rotate(45deg) translate(5px,5px);transition:.2s;' : 'width:22px;height:2px;background:var(--t1);transition:.2s;',
       burgerLine2: s.mobileOpen ? 'width:22px;height:2px;background:var(--t1);opacity:0;transition:.2s;' : 'width:22px;height:2px;background:var(--t1);transition:.2s;',
@@ -1967,7 +1980,7 @@ class Component extends DCLogic {
       ctaBtnWidth: s.isMobile ? 'width:100%;justify-content:center;' : '',
 
       toastMsg: s.toastMsg,
-      railItems, cases, processSteps, diffCards: diffCardsOut, testimonials, calcTypes, addons, faqItems, marqueeItemsDouble, heroStats, exampleQueries,
+      railItems, cases, processSteps, diffCards: diffCardsOut, testimonials, calcTypes, addons, faqItems, marqueeItemsDouble, heroStats, heroStatsMobile, exampleQueries,
       termLines: s.termLines, termTyping: s.termTyping, termTypingActive: s.termTypingActive, termReady: s.termReady, termInput: s.termInput,
       calcDisplay: s.calcDisplay,
       calcDisplayUah: (s.calcDisplay * 45).toLocaleString('uk-UA'),
