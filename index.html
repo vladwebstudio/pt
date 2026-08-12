@@ -11,7 +11,7 @@
   gtag('config', 'AW-18368345385');
 </script>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 
 <!-- ===== RESOURCE HINTS ===== -->
 <link rel="dns-prefetch" href="https://www.googletagmanager.com">
@@ -283,10 +283,14 @@
         <h1 style="font-family:'Space Grotesk',sans-serif;font-size:clamp(28px,4.3vw,48px);font-weight:700;line-height:1.15;letter-spacing:-1px;margin:0 0 16px;">
           Створюю сайти, що <span style="background:var(--g1);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">приносять клієнтів</span>
         </h1>
-        <p style="font-size:16px;color:var(--t2);line-height:1.6;max-width:460px;{{ heroPMargin }}">Роблю сайти, лендинги та CRM під ключ — швидко, без конструкторів.</p>
+        <p style="font-size:16px;color:var(--t2);line-height:1.6;max-width:460px;{{ heroPMargin }}">Сайти, лендинги та CRM під ключ — від $100. Без конструкторів, сам пишу код.</p>
         <div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:14px;{{ heroBtnRowStyle }}">
           <a data-cursor-hover="" onMouseMove="{{ magMove }}" onMouseLeave="{{ magLeave }}" href="https://t.me/vladoss_011?text=%D0%9F%D1%80%D0%B8%D0%B2%D1%96%D1%82%21%20%D0%9F%D0%BE%D0%B1%D0%B0%D1%87%D0%B8%D0%B2%20%D0%B2%D0%B0%D1%88%20%D1%81%D0%B0%D0%B9%D1%82%2C%20%D1%85%D0%BE%D1%87%D1%83%20%D0%B7%D0%B0%D0%BC%D0%BE%D0%B2%D0%B8%D1%82%D0%B8%20%D1%81%D0%B2%D1%96%D0%B9%2C%20%D1%86%D1%96%D0%BA%D0%B0%D0%B2%D0%BB%D1%8F%D1%82%D1%8C%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%96" target="_blank" style="display:inline-flex;align-items:center;gap:9px;padding:15px 28px;background:var(--g1);color:#fff;border-radius:11px;font-size:15px;font-weight:600;text-decoration:none;box-shadow:0 6px 28px rgba(124,92,255,.35);transition:transform .15s ease;"><i class="fab fa-telegram"></i>Написати в Telegram</a>
           <a data-cursor-hover="" onMouseMove="{{ magMove }}" onMouseLeave="{{ magLeave }}" onClick="{{ navCasesClick }}" href="#cases" style="display:inline-flex;align-items:center;gap:9px;padding:15px 28px;background:var(--surf);border:1px solid var(--bd);color:var(--t1);border-radius:11px;font-size:15px;font-weight:600;text-decoration:none;transition:transform .15s ease;"><i class="fas fa-eye"></i>Дивитись кейси</a>
+        </div>
+        <div style="display:flex;align-items:center;gap:7px;margin-bottom:22px;{{ heroBtnRowStyle }}">
+          <i class="fas fa-bolt" style="color:var(--sig);font-size:11px;"></i>
+          <span style="font-size:12.5px;color:var(--t3);">Відповідаю за 15-20 хв</span>
         </div>
         <div style="{{ heroStatsGridStyle }}">
           <sc-for list="{{ heroStats }}" as="s" hint-placeholder-count="4">
@@ -437,8 +441,9 @@
               <h3 style="font-family:'Space Grotesk',sans-serif;font-size:25px;font-weight:700;margin:0 0 14px;letter-spacing:-.4px;">{{ c.title }}</h3>
               <p style="font-size:14.5px;color:var(--t2);line-height:1.8;margin:0 0 20px;">{{ c.desc }}</p>
               <sc-if value="{{ c.hasResult }}" hint-placeholder-val="{{ false }}">
-                <div style="display:inline-flex;align-items:center;gap:8px;margin:0 0 20px;padding:7px 14px;background:rgba(0,217,200,.12);border:1px solid rgba(0,217,200,.25);border-radius:100px;font-size:13px;font-weight:700;color:var(--teal);width:fit-content;"><i class="fas fa-arrow-trend-up"></i>{{ c.result }}</div>
+                <div style="display:inline-flex;align-items:center;gap:8px;margin:0 0 12px;padding:7px 14px;background:rgba(0,217,200,.12);border:1px solid rgba(0,217,200,.25);border-radius:100px;font-size:13px;font-weight:700;color:var(--teal);width:fit-content;"><i class="fas fa-arrow-trend-up"></i>{{ c.result }}</div>
               </sc-if>
+              <div style="display:inline-flex;align-items:center;gap:8px;margin:0 0 20px;padding:7px 14px;background:var(--accg);border:1px solid rgba(124,92,255,.3);border-radius:100px;font-size:13px;font-weight:700;color:var(--accl);width:fit-content;"><i class="fas fa-tag"></i>Реальна ціна: {{ c.priceTag }}</div>
               <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:24px;">
                 <sc-for list="{{ c.tech }}" as="tg" hint-placeholder-count="3">
                   <span style="padding:6px 13px;background:var(--bg2);border:1px solid var(--bd);border-radius:100px;font-size:12px;color:var(--t3);font-weight:500;">{{ tg }}</span>
@@ -622,7 +627,7 @@
 
   
 
-  <footer style="padding:32px 24px;background:var(--bg2);border-top:1px solid var(--bd);position:relative;z-index:1;">
+  <footer style="{{ footerPad }}background:var(--bg2);border-top:1px solid var(--bd);position:relative;z-index:1;">
     <div style="max-width:1240px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;">
       <div style="font-size:13px;color:var(--t3);">© 2026 Влад. Веб-розробка.</div>
       <div style="display:flex;gap:22px;flex-wrap:wrap;">
@@ -635,6 +640,10 @@
   </footer>
 
   <div style="{{ toastStyle }}"><i class="fas fa-check" style="margin-right:8px;"></i>{{ toastMsg }}</div>
+
+  <div style="{{ stickyCtaStyle }}">
+    <a data-cursor-hover="" href="https://t.me/vladoss_011?text=%D0%9F%D1%80%D0%B8%D0%B2%D1%96%D1%82%21%20%D0%9F%D0%BE%D0%B1%D0%B0%D1%87%D0%B8%D0%B2%20%D0%B2%D0%B0%D1%88%20%D1%81%D0%B0%D0%B9%D1%82%2C%20%D1%85%D0%BE%D1%87%D1%83%20%D0%B7%D0%B0%D0%BC%D0%BE%D0%B2%D0%B8%D1%82%D0%B8%20%D1%81%D0%B2%D1%96%D0%B9%2C%20%D1%86%D1%96%D0%BA%D0%B0%D0%B2%D0%BB%D1%8F%D1%82%D1%8C%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%96" target="_blank" style="display:flex;align-items:center;justify-content:center;gap:9px;width:100%;padding:15px 18px calc(15px + env(safe-area-inset-bottom)) 18px;color:#fff;font-size:15px;font-weight:700;text-decoration:none;box-sizing:border-box;"><i class="fab fa-telegram"></i>Написати в Telegram</a>
+  </div>
 
   <div style="{{ nudgeStyle }}">
     <div data-cursor-hover="" onClick="{{ nudgeClick }}" style="display:flex;align-items:center;gap:12px;cursor:pointer;flex:1;">
@@ -666,6 +675,7 @@
 class Component extends DCLogic {
   state = {
     navScrolled: false,
+    heroPast: false,
     mobileOpen: false,
     activeSection: 'hero',
     isMobile: (typeof window !== 'undefined' && window.innerWidth < 900),
@@ -917,6 +927,12 @@ class Component extends DCLogic {
     this.onScroll = () => {
       const y = window.scrollY;
       const scrolled = y > 10;
+      // SPEED/UX FIX (12.08.2026): sticky mobile CTA bar should only appear once the
+      // hero (and its own Telegram button) has scrolled out of view — otherwise the
+      // hero button and the sticky bar are both visible at once, which looks like
+      // duplicated/redundant UI right on page load.
+      const heroEl = document.getElementById('hero');
+      const heroPast = heroEl ? heroEl.getBoundingClientRect().bottom < 80 : y > window.innerHeight * 0.8;
       let active = this.state.activeSection;
       for (const id of this.sectionIds) {
         const el = document.getElementById(id);
@@ -925,8 +941,8 @@ class Component extends DCLogic {
           if (r.top <= 160 && r.bottom > 160) active = id;
         }
       }
-      if (scrolled !== this.state.navScrolled || active !== this.state.activeSection) {
-        this.setState({ navScrolled: scrolled, activeSection: active });
+      if (scrolled !== this.state.navScrolled || active !== this.state.activeSection || heroPast !== this.state.heroPast) {
+        this.setState({ navScrolled: scrolled, activeSection: active, heroPast });
       }
     };
     window.addEventListener('scroll', this.onScroll, { passive: true });
@@ -1722,9 +1738,9 @@ class Component extends DCLogic {
     });
 
     const cases = [
-      { idx: 0, gridCols: '1.15fr 1fr', galleryOrder: '', infoOrder: '', img: 'img/contrabas-1.webp', alt: 'Сайт відеопродакшн-студії Contrabas', type: 'Відеопродакшн-сайт', typeIcon: 'fas fa-clapperboard', typeBg: 'rgba(255,107,107,.13)', typeColor: '#ff8787', title: 'Сайт та адмін-панель для Contrabas', desc: 'Повний редизайн сайту відеопродакшн-студії: темний преміальний UI, кейси з кількома роликами і кастомна адмін-панель для самостійного керування контентом.', hasResult: true, result: 'Власник керує сайтом сам, без розробника', tech: ['HTML', 'CSS', 'JavaScript', 'Google Sheets API'], detailHref: 'case-1.html', liveHref: 'https://contrabasvideo.com.ua/' },
-      { idx: 1, gridCols: '1fr 1.15fr', galleryOrder: 'order:2;', infoOrder: 'order:1;', img: 'img/srm-1.webp', alt: 'CRM система — головний екран менеджера', type: 'CRM Система', typeIcon: 'fas fa-database', typeBg: 'var(--accg)', typeColor: 'var(--accl)', title: 'CRM для управління бізнесом і контролю оплат', desc: 'Система для контролю оплат, менеджерів і статистики: адмін- і менеджер-панель, аналітика по проєктах, порівняння менеджерів і цілі.', hasResult: true, result: 'Досі на постійній підтримці проєкту', tech: ['HTML', 'CSS', 'JavaScript', 'Google Sheets API'], detailHref: 'case-2.html', liveHref: 'https://vladwebstudio.github.io/crm-con-pay/' },
-      { idx: 2, gridCols: '1.15fr 1fr', galleryOrder: '', infoOrder: '', img: 'img/tovark-1.webp', alt: 'Сайт онлайн-курсу', type: 'Сайт курсу', typeIcon: 'fas fa-book-open', typeBg: 'rgba(253,203,110,.15)', typeColor: '#ffeaa7', title: 'Онлайн-курс з товарного бізнесу', desc: 'Висококонверсійний односторінковий сайт у темному UI-стилі з преміальними акцентами. Mobile-first, оптимізований під швидку лідогенерацію.', hasResult: true, result: 'Вже 3-й проєкт разом', tech: ['HTML', 'CSS', 'JavaScript'], detailHref: 'case-3.html', liveHref: 'https://vladwebstudio.github.io/tovark/' },
+      { idx: 0, gridCols: '1.15fr 1fr', galleryOrder: '', infoOrder: '', img: 'img/contrabas-1.webp', alt: 'Сайт відеопродакшн-студії Contrabas', type: 'Відеопродакшн-сайт', typeIcon: 'fas fa-clapperboard', typeBg: 'rgba(255,107,107,.13)', typeColor: '#ff8787', title: 'Сайт та адмін-панель для Contrabas', desc: 'Повний редизайн сайту відеопродакшн-студії: темний преміальний UI, кейси з кількома роликами і кастомна адмін-панель для самостійного керування контентом.', hasResult: true, result: 'Власник керує сайтом сам, без розробника', priceTag: '450$ · ~1 тиждень', tech: ['HTML', 'CSS', 'JavaScript', 'Google Sheets API'], detailHref: 'case-1.html', liveHref: 'https://contrabasvideo.com.ua/' },
+      { idx: 1, gridCols: '1fr 1.15fr', galleryOrder: 'order:2;', infoOrder: 'order:1;', img: 'img/srm-1.webp', alt: 'CRM система — головний екран менеджера', type: 'CRM Система', typeIcon: 'fas fa-database', typeBg: 'var(--accg)', typeColor: 'var(--accl)', title: 'CRM для управління бізнесом і контролю оплат', desc: 'Система для контролю оплат, менеджерів і статистики: адмін- і менеджер-панель, аналітика по проєктах, порівняння менеджерів і цілі.', hasResult: true, result: 'Досі на постійній підтримці проєкту', priceTag: '700$ · 7-14 днів', tech: ['HTML', 'CSS', 'JavaScript', 'Google Sheets API'], detailHref: 'case-2.html', liveHref: 'https://vladwebstudio.github.io/crm-con-pay/' },
+      { idx: 2, gridCols: '1.15fr 1fr', galleryOrder: '', infoOrder: '', img: 'img/tovark-1.webp', alt: 'Сайт онлайн-курсу', type: 'Сайт курсу', typeIcon: 'fas fa-book-open', typeBg: 'rgba(253,203,110,.15)', typeColor: '#ffeaa7', title: 'Онлайн-курс з товарного бізнесу', desc: 'Висококонверсійний односторінковий сайт у темному UI-стилі з преміальними акцентами. Mobile-first, оптимізований під швидку лідогенерацію.', hasResult: true, result: 'Вже 3-й проєкт разом', priceTag: '550$ · 3-5 днів', tech: ['HTML', 'CSS', 'JavaScript'], detailHref: 'case-3.html', liveHref: 'https://vladwebstudio.github.io/tovark/' },
     ].map(c => ({
       ...c,
       gridCols: s.isMobile ? '1fr' : c.gridCols,
@@ -1781,8 +1797,8 @@ class Component extends DCLogic {
     });
 
     const testiData = [
-      { name: 'Руслан Тесленко', text: 'Це саме те, що я хотів побачити — дуже круто вийшло. Окремо порадувала адмін-панель: сам редагую кейси і фото без розробника. Зробили навіть швидше, ніж домовлялись.', project: 'Відеопродакшн-сайт', avatarBg: '#ff6b6b', side: 'left', ig: 'https://www.instagram.com/ruslan.teslenko.producer/', photo: 'img/testi-ruslan.webp' },
-      { name: 'Руслан В.', text: 'Дуже сподобалася система аналітики — обширна і зручна. Влад швидко зрозумів задачу і реалізував усе як треба.', project: 'CRM система', avatarBg: '#6c5ce7', side: 'right', stat: 'Досі на постійній підтримці проєкту', useIcon: true },
+      { name: 'Руслан Тесленко', text: 'Це саме те, що я хотів побачити, дуже круто вийшло. Окремо порадувала адмін-панель: сам редагую кейси і фото без розробника. Зробили навіть швидше, ніж домовлялись.', project: 'Відеопродакшн-сайт', avatarBg: '#ff6b6b', side: 'left', ig: 'https://www.instagram.com/ruslan.teslenko.producer/', photo: 'img/testi-ruslan.webp' },
+      { name: 'Руслан В.', text: 'Дуже сподобалася система аналітики, вона обширна і зручна. Влад швидко зрозумів задачу і реалізував усе як треба.', project: 'CRM система', avatarBg: '#6c5ce7', side: 'right', stat: 'Досі на постійній підтримці проєкту', useIcon: true },
       { name: 'Неля Колесник', text: 'Влад створив сайт у швидкі терміни, все чудово. Замовили вже третій проєкт — постійно повертаємось.', project: 'Сайт курсу', avatarBg: '#e17055', side: 'left', ig: 'https://www.instagram.com/nelia_kolesnyk/', stat: 'Вже 3-й проєкт разом', photo: 'img/testi-nelia.webp' },
     ];
     this.testiTexts = testiData.map(t => t.text);
@@ -1904,7 +1920,7 @@ class Component extends DCLogic {
       heroBtnRowStyle: s.isMobile ? 'justify-content:center;' : '',
       heroColStyle: s.isMobile ? 'text-align:center;' : '',
       heroPMargin: s.isMobile ? 'margin:0 auto 32px;' : 'margin:0 0 32px;',
-      heroStatsGridStyle: s.isMobile ? 'display:grid;grid-template-columns:repeat(4,1fr);gap:8px;max-width:420px;margin:16px auto 0;' : 'display:grid;grid-template-columns:repeat(4,1fr);gap:20px;max-width:480px;margin-top:30px;',
+      heroStatsGridStyle: s.isMobile ? 'display:none;' : 'display:grid;grid-template-columns:repeat(4,1fr);gap:20px;max-width:480px;margin-top:30px;',
       heroStatNumSize: s.isMobile ? 'font-size:19px;' : 'font-size:28px;',
       heroStatLabelSize: s.isMobile ? 'font-size:9px;margin-top:2px;' : 'font-size:11px;margin-top:4px;',
       termHeaderPad: s.isMobile ? 'padding:9px 12px;' : 'padding:14px 18px;',
@@ -1922,6 +1938,7 @@ class Component extends DCLogic {
       processDashOffset: s.processActive >= 0 ? String(880 - (880 * ((s.processActive + 1) / 4))) : (s.processOn.filter(Boolean).length >= 4 ? '0' : String(880 - (880 * (s.processOn.filter(Boolean).length / 4)))),
       toastStyle: s.toast ? 'position:fixed;bottom:36px;left:50%;transform:translate(-50%,0);background:var(--g1);color:#fff;padding:13px 26px;border-radius:11px;font-size:14px;font-weight:600;z-index:2000;box-shadow:0 10px 32px rgba(0,0,0,.4);transition:all .3s ease;opacity:1;' : 'position:fixed;bottom:20px;left:50%;transform:translate(-50%,0);background:var(--g1);color:#fff;padding:13px 26px;border-radius:11px;font-size:14px;font-weight:600;z-index:2000;opacity:0;visibility:hidden;transition:all .3s ease;',
       diffGridCols: s.isMobile ? '1fr' : 'repeat(2,1fr)',
+      footerPad: s.isMobile ? 'padding:32px 24px calc(86px + env(safe-area-inset-bottom));' : 'padding:32px 24px;',
 
       calcCardPad: s.isMobile ? 'padding:18px 14px;' : 'padding:34px;',
       calcTypeGridStyle: s.isMobile ? 'display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-bottom:20px;' : 'display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:28px;',
@@ -1967,10 +1984,11 @@ class Component extends DCLogic {
       answerTypingActive: !!s.answerTyping,
       answerTyping: s.answerTyping,
       answeringThinking: s.answering && !s.answerTyping,
+      stickyCtaStyle: (s.isMobile && s.heroPast) ? 'position:fixed;bottom:0;left:0;right:0;background:var(--g1);border-radius:16px 16px 0 0;box-shadow:0 -6px 20px rgba(0,0,0,.35);z-index:1400;transform:translateY(0);opacity:1;pointer-events:auto;transition:transform .25s ease,opacity .25s ease;' : 'position:fixed;bottom:0;left:0;right:0;background:var(--g1);border-radius:16px 16px 0 0;box-shadow:0 -6px 20px rgba(0,0,0,.35);z-index:1400;transform:translateY(100%);opacity:0;pointer-events:none;transition:transform .25s ease,opacity .25s ease;',
       nudgeStyle: s.isMobile
         ? (s.nudgeVisible
-            ? 'position:fixed;bottom:14px;left:14px;right:14px;max-width:none;padding:13px 14px;background:var(--surf);border:1px solid var(--acc);border-radius:14px;box-shadow:0 16px 40px rgba(0,0,0,.5),0 0 0 4px var(--accg);z-index:1500;display:flex;align-items:center;gap:10px;font-size:12px;transform:translateY(0);opacity:1;transition:all .4s cubic-bezier(.4,0,.2,1);'
-            : 'position:fixed;bottom:14px;left:14px;right:14px;max-width:none;padding:13px 14px;background:var(--surf);border:1px solid var(--acc);border-radius:14px;box-shadow:0 16px 40px rgba(0,0,0,.5);z-index:1500;display:flex;align-items:center;gap:10px;font-size:12px;transform:translateY(20px);opacity:0;pointer-events:none;transition:all .4s cubic-bezier(.4,0,.2,1);')
+            ? 'position:fixed;bottom:calc(84px + env(safe-area-inset-bottom));left:14px;right:14px;max-width:none;padding:13px 14px;background:var(--surf);border:1px solid var(--acc);border-radius:14px;box-shadow:0 16px 40px rgba(0,0,0,.5),0 0 0 4px var(--accg);z-index:1500;display:flex;align-items:center;gap:10px;font-size:12px;transform:translateY(0);opacity:1;transition:all .4s cubic-bezier(.4,0,.2,1);'
+            : 'position:fixed;bottom:calc(84px + env(safe-area-inset-bottom));left:14px;right:14px;max-width:none;padding:13px 14px;background:var(--surf);border:1px solid var(--acc);border-radius:14px;box-shadow:0 16px 40px rgba(0,0,0,.5);z-index:1500;display:flex;align-items:center;gap:10px;font-size:12px;transform:translateY(20px);opacity:0;pointer-events:none;transition:all .4s cubic-bezier(.4,0,.2,1);')
         : (s.nudgeVisible
             ? 'position:fixed;bottom:24px;right:24px;max-width:300px;padding:16px 18px;background:var(--surf);border:1px solid var(--acc);border-radius:16px;box-shadow:0 16px 40px rgba(0,0,0,.5),0 0 0 4px var(--accg);z-index:1500;display:flex;align-items:center;gap:12px;transform:translateY(0);opacity:1;transition:all .4s cubic-bezier(.4,0,.2,1);'
             : 'position:fixed;bottom:24px;right:24px;max-width:300px;padding:16px 18px;background:var(--surf);border:1px solid var(--acc);border-radius:16px;box-shadow:0 16px 40px rgba(0,0,0,.5);z-index:1500;display:flex;align-items:center;gap:12px;transform:translateY(20px);opacity:0;pointer-events:none;transition:all .4s cubic-bezier(.4,0,.2,1);'),
