@@ -1067,13 +1067,13 @@ class Component extends DCLogic {
         const typeChar = () => {
           c++;
           this.setState({ termTyping: text.slice(0, c) });
-          if (c < text.length) { this.bootTimer = setTimeout(typeChar, 30); }
+          if (c < text.length) { this.bootTimer = setTimeout(typeChar, 4); }
           else {
             this.bootTimer = setTimeout(() => {
               this.setState(s => ({ termLines: [...s.termLines, { isCmd: true, isOut: false, text }], termTypingActive: false }));
               idx++;
-              this.bootTimer = setTimeout(next, 260);
-            }, 260);
+              this.bootTimer = setTimeout(next, 60);
+            }, 60);
           }
         };
         typeChar();
@@ -1083,19 +1083,25 @@ class Component extends DCLogic {
         const typeOut = () => {
           c++;
           this.setState({ answerTyping: text.slice(0, c) });
-          if (c < text.length) { this.bootTimer = setTimeout(typeOut, 12); }
+          // SPEED FIX (12.08.2026): PageSpeed showed the hero terminal's letter-by-letter
+          // typing was the dominant chunk of LCP "render delay" (~2.9s of animation on top
+          // of React mount time) — the LCP text is this first "out" line, and it used to
+          // take ~1.4s just to finish typing at 12ms/char plus surrounding pauses. Cut char
+          // delay and pauses so the value-prop text is on screen almost immediately, while
+          // still keeping a visible (much faster) typing effect for the rest of the intro.
+          if (c < text.length) { this.bootTimer = setTimeout(typeOut, 3); }
           else {
             this.bootTimer = setTimeout(() => {
               this.setState(s => ({ termLines: [...s.termLines, { isCmd: false, isOut: true, text }], answerTyping: '' }));
               idx++;
-              this.bootTimer = setTimeout(next, 260);
-            }, 150);
+              this.bootTimer = setTimeout(next, 60);
+            }, 60);
           }
         };
-        this.bootTimer = setTimeout(typeOut, 60);
+        this.bootTimer = setTimeout(typeOut, 20);
       }
     };
-    this.bootTimer = setTimeout(next, 500);
+    this.bootTimer = setTimeout(next, 60);
   }
 
   termChange = (e) => this.setState({ termInput: e.target.value });
